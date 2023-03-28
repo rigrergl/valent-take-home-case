@@ -18,7 +18,7 @@ function App() {
   };
 
   return (
-    <Container>
+    <Container style={{marginTop: 40}}>
       {step == 1 && (
         <SelectGrade />
       )}
