@@ -1,3 +1,4 @@
+const { PythonShell } = require('python-shell');
 var express = require('express');
 var router = express.Router();
 
@@ -75,12 +76,49 @@ router.get("/api/initial-composition", (req, res) => {
     "Iron": 0.81
   }
 
-  setTimeout(function() {
+  setTimeout(function () {
     res.json({
       name: "316 SS",
       initialComposition: initialComposition
     });
   }, 2000); // 3000ms = 3 seconds
+});
+
+router.get('/api/elements-to-add', (req, res) => {
+  const options = {
+    mode: 'text',
+    pythonPath: 'C:\\Python311\\python.exe', // path to the Python executable
+    pythonOptions: ['-u'], // unbuffered stdout and stderr
+    scriptPath: '.', // path to the script
+  };
+
+  PythonShell.run('compute_added_elements.py', options).then(messages => {
+    const stringArray = messages[21]
+    const parsedArray = JSON.parse(stringArray);
+
+    const initialComposition = {
+      "Chromium": 0.1479,
+      "Nickel": 0.02,
+      "Molybdenum": 0.005,
+      "Carbon": 0.0001,
+      "Manganese": 0.01,
+      "Phosphorus": 0.0003,
+      "Sulfur": 0.0002,
+      "Silicon": 0.006,
+      "Nitrogen": 0.0005,
+      "Iron": 0.81
+    };
+
+    const massesToAdd = {};
+    for (const key in initialComposition) {
+      massesToAdd[key] = parsedArray.shift();
+    }
+
+    res.json({
+      finalWeight: messages[20],
+      massesToAdd: massesToAdd
+    })
+  });
 });
 
 module.exports = router;
