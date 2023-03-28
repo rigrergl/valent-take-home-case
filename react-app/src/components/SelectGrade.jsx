@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Form, FormControl, Button, Table, Card, Row, Col } from 'react-bootstrap';
 import axios from "axios";
 
-const SelectGrade = () => {
+const SelectGrade = ({enableNextButton}) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResult, setSearchResult] = useState(null);
   const [rows, setRows] = useState(null)
@@ -16,6 +16,11 @@ const SelectGrade = () => {
       const res = await axios.get(`http://localhost:3000/api/steel?name=${searchTerm}`);
       setSearchResult(res.data);
       setRows(Object.entries(res.data.chemicalComposition))
+
+      // saving selected grade to local storage
+      const selectedGradeJSON = JSON.stringify(res.data)
+      localStorage.setItem('selectedGrade', selectedGradeJSON)
+      enableNextButton()
     } catch (error) {
       console.log(error);
     }
