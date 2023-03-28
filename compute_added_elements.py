@@ -14,10 +14,11 @@ y = pulp.LpVariable("y", lowBound=100)
 # Add the objective function
 prob += y, "Objective Function"
 
-# Add the constraints
 # Define the constraints and add them to the problem
 for i in range(10):
     prob += (q[i]*w + x[i]) == y*p[i], f"Constraint {i+1}"
+
+prob += y == w + lpSum(x), "New Constraint"
 
 # Solve the problem
 prob.solve()
