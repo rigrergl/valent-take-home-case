@@ -3,7 +3,6 @@ import { Button, Container, Row, Col } from 'react-bootstrap';
 
 import SelectGrade from "./components/SelectGrade";
 import GetInitialMakeup from "./components/GetInitialMakeup";
-import EnterLadleWeight from "./components/EnterLadleWeight";
 import MainPanel from "./components/MainPanel";
 
 function App() {
@@ -12,6 +11,7 @@ function App() {
 
   const handleNext = () => {
     setStep(step + 1);
+    setIsNextButtonEnabled(false)
   };
 
   const handlePrevious = () => {
@@ -24,12 +24,9 @@ function App() {
         <SelectGrade enableNextButton={() => {setIsNextButtonEnabled(true)}} />
       )}
       {step == 2 && (
-        <GetInitialMakeup />
+        <GetInitialMakeup enableNextButton={() => {setIsNextButtonEnabled(true)}}/>
       )}
       {step == 3 && (
-        <EnterLadleWeight />
-      )}
-      {step == 4 && (
         <MainPanel />
       )}
 
@@ -41,7 +38,7 @@ function App() {
             </Button>
           </Col>
         )}
-        {step < 4 ? (
+        {step < 3 ? (
           <Col className="d-flex justify-content-end">
             <Button variant="primary" onClick={handleNext} disabled={!isNextButtonEnabled}>
               Next

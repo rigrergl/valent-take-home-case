@@ -61,4 +61,26 @@ router.get("/api/steel", (req, res) => {
   }
 });
 
+router.get("/api/initial-composition", (req, res) => {
+  const initialComposition = {
+    "Chromium": 0.1479,
+    "Nickel": 0.02,
+    "Molybdenum": 0.005,
+    "Carbon": 0.0001,
+    "Manganese": 0.01,
+    "Phosphorus": 0.0003,
+    "Sulfur": 0.0002,
+    "Silicon": 0.006,
+    "Nitrogen": 0.0005,
+    "Iron": 0.81
+  }
+
+  setTimeout(function() {
+    res.json({
+      name: "316 SS",
+      initialComposition: initialComposition
+    });
+  }, 2000); // 3000ms = 3 seconds
+});
+
 module.exports = router;
