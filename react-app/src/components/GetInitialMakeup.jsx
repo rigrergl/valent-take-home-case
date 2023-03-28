@@ -14,7 +14,7 @@ const GetInitialMakeup = ({enableNextButton}) => {
     }
 
     fetchData()
-  })
+  }, [])
 
   const handleInputChange = (event) => {;
     localStorage.setItem('initialWeight', event.target.value)
@@ -85,7 +85,7 @@ const GetInitialMakeup = ({enableNextButton}) => {
       </Col>
       <Col>
         <Form.Group>
-          <Form.Label>Ladle weight:</Form.Label>
+          <Form.Label>Ladle weight (Kg):</Form.Label>
           <Form.Control onChange={handleInputChange} type="number" min="0" step="0.01" placeholder="Enter ladle weight" />
         </Form.Group>
       </Col>
